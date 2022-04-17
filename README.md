@@ -8,6 +8,7 @@
 
 ### 3.background일때 , foreground일때 동작하게 하기
 
+### 4.<추가> alias 주는법
 ---
 
 ## 1.플러그인 설치
@@ -160,3 +161,18 @@
    }
  </code>
 </pre>
+
+### 4. **<추가> alias 주는법**
+```json
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@environments/*": ["src/environments/*"],
+    }
+  },
+}
+
+```
