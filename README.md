@@ -9,6 +9,8 @@
 ### 3.background일때 , foreground일때 동작하게 하기
 
 ### 4.<추가> alias 주는법
+
+### 5.<추가> localnotifications 동작
 ---
 
 ## 1.플러그인 설치
@@ -162,7 +164,7 @@
  </code>
 </pre>
 
-### 4. **<추가> alias 주는법**
+## 4. **<추가> alias 주는법**
 ```json
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
@@ -175,4 +177,105 @@
   },
 }
 
+```
+
+
+## 5.**<추가> localnotifications 동작**
+>  localnotifications를 생성해준다. 위치는 src < app < sercie < noti.service.ts
+
+//noti.service.ts
+```typescript
+import { Injectable } from '@angular/core';
+import { ELocalNotificationTriggerUnit, LocalNotifications } from '@awesome-cordova-plugins/local-notifications/ngx';
+@Injectable({
+  providedIn: 'root'
+})
+export class NotiService {
+
+  constructor(private localnoti: LocalNotifications) {
+  }
+
+  notiClick(){
+    this.localnoti.on('click').subscribe(()=>{
+      alert('click');
+    });
+  }
+
+  /**
+   * @description : 현재시간에 알림을 보낸다
+   */
+  currentLocalNoti(){
+    const date = new Date();
+    const notidate = new Date(new Date().getTime() + 200);
+    const yyyy = date.getFullYear();
+    const month = date.getMonth();
+    const currentdate = date.getDate();
+
+    this.localnoti.schedule({
+      id:3, //id는 고유값
+      title:`${yyyy}년 ${month+1}월 ${currentdate}일`, // 알림 제목
+      trigger:{ // 언제보낼것인지 결정한다.
+        firstAt:notidate
+      }
+    });
+  }
+}
+
+```
+
+// home.page.ts
+```typescript
+import { Component } from '@angular/core';
+import { NotiService } from '@app/service/noti.service';
+@Component({
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+})
+export class HomePage {
+  constructor(private notiService: NotiService) {
+
+  }
+
+  clickNoti(){
+    this.notiService.currentLocalNoti();
+  }
+}
+```
+
+//hom.page.html
+```html
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      HOME1
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-button expand="block" (click)="clickNoti()">Localnoti</ion-button>
+</ion-content>
+```
+
+
+//app.component.ts
+
+```typescript
+import { Component } from '@angular/core'
+import { NotiService } from '@app/service/noti.service';
+@Component({
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+})
+export class AppComponent {
+  constructor(
+    private notiService: NotiService
+  ) {
+
+    this.notiService.notiClick();
+  }
+
+}
 ```

@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { FCM } from  'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { NotiService } from './service/noti.service';
-import { LocalNotifications } from '@awesome-cordova-plugins/local-notifications/ngx';
+import { NotiService } from '@app/service/noti.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,17 +13,15 @@ export class AppComponent {
     private plt: Platform,
     private fcm: FCM,
     private router: Router,
-    private notiService: NotiService,
-    private localNotifications: LocalNotifications
+    private notiService: NotiService
   ) {
 
     this.initializeApp();
 
-
+    this.notiService.notiClick();
   }
 
   initializeApp() {
-    console.log('initializeApp');
     this.plt.ready().then(async () => {
       const payload = await this.fcm.getInitialPushPayload();
       if(payload){
@@ -42,21 +39,6 @@ export class AppComponent {
       this.fcm.getToken().then(token => {
         console.log('token : ', token);
       });
-
-
-       /* ============ localnotifications ============ */
-      //1.click
-      this.localNotifications.on('click').subscribe(()=>{
-        alert('click');
-      });
-
-      //1. click
-      this.notiService.notiClick();
-
-      //2. 스케쥴
-      this.notiService.scheduleNotification();
-      /* ============ localnotifications ============ */
-
     });
   }
 
