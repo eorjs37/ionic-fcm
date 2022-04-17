@@ -26,8 +26,7 @@
 
 > 아래 코드처럼 app.module.ts에 import를 해준다.
 
-<pre>
- <code>
+```typescript
    //app.module.ts
    import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 
@@ -35,8 +34,7 @@
         providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },LocalNotifications,FCM],
     })
     export class AppModule {}
- </code>
-</pre>
+```
 
 ## 3.background일때 , foreground일때 동작하게 하기
 
@@ -48,8 +46,7 @@
 
 ### 1. **background에서 동작할때(앱이 비활성화)**
 
-<pre>
- <code>
+```typescript
    //app.component.ts
    import { FCM } from  'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
    import { Platform } from '@ionic/angular';
@@ -77,13 +74,11 @@
            })
        }
    }
- </code>
-</pre>
+```
 
 ### 2. **foreground에서 동작할때(앱이 활성화 되어있지만 폰에서 다른 작업을 할 경우)**
 
-<pre>
- <code>
+```typescript
    //app.component.ts
    import { FCM } from  'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
    import { Platform } from '@ionic/angular';
@@ -109,13 +104,11 @@
            })
        }
    }
- </code>
-</pre>
+```
 
 ### 3. **foreground에서 동작하면서 해당 앱에서 다른작업을 할때**
 
-<pre>
- <code>
+```typescript
    //app.component.ts
    import { FCM } from  'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
    import { Platform } from '@ionic/angular';
@@ -161,8 +154,7 @@
             });
        }
    }
- </code>
-</pre>
+```
 
 ## 4. **<추가> alias 주는법**
 ```json
